@@ -1,6 +1,4 @@
 import Image from "next/image";
-import ContactButton from "../components/ContactButton";
-import PropertyList from "../components/properties/PropertyList";
 
 const MyReservationsPage = () => {
     return (
