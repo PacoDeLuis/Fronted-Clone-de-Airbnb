@@ -1,4 +1,5 @@
 'use client';
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import MenuLink from "./MenuLink";
 import useLoginModal from "@/app/hooks/useLoginModal";
@@ -13,6 +14,7 @@ interface UserNavProps {
 const UserNav:React.FC<UserNavProps> = ({
     userId
 }) => {
+    const router = useRouter();
     const loginModal = useLoginModal()
     const signupModal = useSignupModal()
 
@@ -33,30 +35,65 @@ const UserNav:React.FC<UserNavProps> = ({
             </button>
             {isOpen && (
                 <div className="w-[220px] absolute top-[60px] right-0 bg-white border rounded-xl shadow-md flex flex-col cursor-pointer">
-                    {userId ?(
-                        <LogoutButton/>
-                    ): 
-                    <>
-                        <MenuLink
-                            label='Log in'
-                            onClick={() => {
-                                setIsOpen(false)
-                                loginModal.open()
-                        }}
-                    />
-                        <MenuLink
-                            label='Sign up'
-                            onClick={() => {
-                                setIsOpen(false)
-                                signupModal.open()
-                        }}
-                    />
-                </>
-        }
-                    
+                    {userId ? (
+                        <>
+                            <MenuLink
+                                label='Inbox'
+                                onClick={() => {
+                                    setIsOpen(false);
+                                    router.push('/inbox');
+                                }}
+                            />
+
+                            <MenuLink
+                                label='My properties'
+                                onClick={() => {
+                                    setIsOpen(false);
+                                    router.push('/myproperties');
+                                }}
+                            />
+
+                            <MenuLink
+                                label='My favorites'
+                                onClick={() => {
+                                    setIsOpen(false);
+                                    router.push('/myfavorites');
+                                }}
+                            />
+
+                            <MenuLink
+                                label='My reservations'
+                                onClick={() => {
+                                    setIsOpen(false);
+                                    router.push('/myreservations');
+                                }}
+                            />
+
+                            <LogoutButton />
+                        </>
+                    ) : (
+                        <>
+                            <MenuLink 
+                                label='Log in'
+                                onClick={() => {
+                                    setIsOpen(false);
+                                    loginModal.open();
+                                }}
+                            />
+
+                            <MenuLink 
+                                label='Sign up'
+                                onClick={() => {
+                                    setIsOpen(false);
+                                    signupModal.open();
+                                }}
+                            />
+                        </>
+                    )}
                 </div>
             )}
         </div>
     )
 }
- export default UserNav;
+
+export default UserNav;
